@@ -53,13 +53,14 @@
     }
 
     function rgbToXyz(r, g, b) {
-        let [_r, _g, _b] = [r, g, b]
-            .map(C => C / 255)
-            .map((c) => (c > 0.04045) ? Math.pow((c + 0.055) / 1.055, 2.4) : c / 12.92);
+        let [rn, gn, bn] = [r, g, b]
+            .map(_ => _ / 255)
+            .map((x) => (x > 0.04045) ? Math.pow((x + 0.055) / 1.055, 2.4) : x / 12.92)
+            .map(_ => _ * 100);
 
-        let x =  0.4124564 * _r + 0.3575761 * _g + 0.1804375 * _b
-        let y =  0.2126729 * _r + 0.7151522 * _g + 0.0721750 * _b
-        let z =  0.0193339 * _r + 0.1191920 * _g + 0.9503041 * _b        
+        let x =  0.4124564 * rn + 0.3575761 * gn + 0.1804375 * bn;
+        let y =  0.2126729 * rn + 0.7151522 * gn + 0.0721750 * bn;
+        let z =  0.0193339 * rn + 0.1191920 * gn + 0.9503041 * bn;       
 
         return [x, y, z];
     }
@@ -70,9 +71,9 @@
             return v > 0.008856 ? Math.pow(v, 1 / 3) : v * 7.787 + 16 / 116
         });
 
-        let l = 116 * _y - 16
-        let a = 500 * (_x - _y)
-        let b = 200 * (_y - _z)
+        let l = 116 * _y - 16;
+        let a = 500 * (_x - _y);
+        let b = 200 * (_y - _z);
 
         return [l, a, b];
     }   
@@ -86,9 +87,9 @@
         let y = f((l + 16)/116) * XYZ_WHITE[1];
         let z = f((l + 16)/116 - b/200) * XYZ_WHITE[2];
 
-        x = Math.round(x);
-        y = Math.round(y);
-        z = Math.round(z);
+        // x = Math.round(x);
+        // y = Math.round(y);
+        // z = Math.round(z);
 
         return [x, y, z];
     }
@@ -102,7 +103,7 @@
         
         let rgb = [rn, gn, bn]
             .map(x => (x >= 0.0031308) ? 1.055 * Math.pow(x, 1/2.4) - 0.055 : 12.92 * x)
-            .map(_ => _ * 255)
+            .map(_ => _ * 255);
             //.map(_ => Math.round(_))
         
         return rgb;
