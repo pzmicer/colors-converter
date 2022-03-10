@@ -1,0 +1,27 @@
+label {
+    font-weight: bold;
+}
+
+input {
+    font-size: 140%;
+}
+
+.page {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.output {
+    text-align: right;
+}
+
+input[type=color] {
+    width: 250px; 
+    height: 250px;
+}
+
+input[type=text] {
+    width: 350px; 
+}
